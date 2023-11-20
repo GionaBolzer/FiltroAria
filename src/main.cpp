@@ -1,5 +1,7 @@
 #include "main.h"
 
+Debounce button(ButtonPin); // costruisco classe su bottone pin
+
 void setup()
 {
 #ifdef LOG
@@ -36,6 +38,12 @@ void loop()
     power(PM_READ);
     setPwmDuty(fanPower); // Change this value 0-100 to adjust duty cycle
 #endif
+    if (button.scan() == 1)
+    {
+#ifdef LOG
+        Serial.print("pulsante premuto");
+#endif
+    }
 }
 
 void wakeUpSensor() // wake uo every 120s
@@ -95,7 +103,7 @@ void power(uint32_t read)
 {
     if (millis() > fanTimer)
     {
-        float power = (float(maxPower - minPower)/float(maxPowerPM - minPowerPM)) * (float(read - minPowerPM)) + float(minPower); // retta passatper per (minPowerPM, minPower) e (maxPowerPM, maxPower)
+        float power = (float(maxPower - minPower) / float(maxPowerPM - minPowerPM)) * (float(read - minPowerPM)) + float(minPower); // retta passatper per (minPowerPM, minPower) e (maxPowerPM, maxPower)
 
         if (power > float(maxPower))
         {

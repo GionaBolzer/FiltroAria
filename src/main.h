@@ -1,11 +1,12 @@
 #include <Arduino.h>
 #include <SoftwareSerial.h>
 #include "PMS.h"
-
+#include "pindef.h"
+#include "./Utility/debouce.h"
 
 ///////////////////////////////////// SENSOR ////////////////////////////////////////////
 #ifdef PMSENSOR
-SoftwareSerial pmsSerial(2, 3);
+SoftwareSerial pmsSerial(RxPin, TxPin);
 PMS pms(pmsSerial);
 PMS::DATA data;
 #define GET_PM_READ_EVERY 120000 // wake sensore every 60s
