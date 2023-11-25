@@ -6,10 +6,8 @@
 #define TxPin 3 // Tx on Nano
 
 // button
-#define ButtonPin 4
-
+#define BUTTON_PIN 4
 
 // I2C
-
 
 #endif

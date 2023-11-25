@@ -1,9 +1,11 @@
-class Debounce {        
-  public:
+class Debounce
+{
     int _pinValue;
     int _delayDebounce;
     bool _state; // set to false if button pressed
-    int timer; 
+    int timer;
+
+public:
     Debounce(int pinValue);
-    int scan(); // return 1 if button pass debouce
+    bool scan(); // return 1 if button pass debouce
 };

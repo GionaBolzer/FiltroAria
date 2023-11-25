@@ -1,9 +1,11 @@
 #include "main.h"
 
-Debounce button(ButtonPin); // costruisco classe su bottone pin
+Debounce button(BUTTON_PIN); // costruisco classe su bottone pin
 
 void setup()
 {
+
+    // pinMode(BUTTON_PIN, INPUT_PULLUP);
 #ifdef LOG
     Serial.begin(115200);
 #endif
@@ -38,11 +40,9 @@ void loop()
     power(PM_READ);
     setPwmDuty(fanPower); // Change this value 0-100 to adjust duty cycle
 #endif
-    if (button.scan() == 1)
+    if (button.scan())
     {
-#ifdef LOG
-        Serial.print("pulsante premuto");
-#endif
+        Serial.println("pulsante premuto da >50ms");
     }
 }
 
