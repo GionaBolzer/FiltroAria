@@ -4,7 +4,7 @@
 Debounce::Debounce(int PinValue)
 {
     _pinValue = PinValue;
-    _delayDebounce = 50;
+    _delayDebounce = 150;
     _state = true;
     pinMode(PinValue, INPUT_PULLUP);
 }

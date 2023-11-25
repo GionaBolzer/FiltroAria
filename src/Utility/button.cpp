@@ -19,18 +19,16 @@ Pressed Button::scan()
         return Pressed::NO;
     }
 
-    // button still pressed
-    if (digitalRead(pinValue) == LOW)
+    if (millis() >= 2000 + timer)
     {
-        return Pressed::NO;
+        return Pressed::LONG;
     }
 
-    if (millis() - timer < 200)
+    if (digitalRead(pinValue) == HIGH)
     {
-        return Pressed::SHORT;
+        timer = 0;
     }
-
-    return Pressed::LONG;
+    return Pressed::SHORT
 }
 
 bool Button::is_pressing()
