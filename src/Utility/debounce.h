@@ -4,8 +4,9 @@ class Debounce
     int _delayDebounce;
     bool _state; // set to false if button pressed
     int timer;
+    bool _mode;
 
 public:
-    Debounce(int pinValue);
-    bool scan(); // return 1 if button pass debouce
+    Debounce(int pinValue, bool mode);
+    bool scan(); // return true if button is in `mode`
 };

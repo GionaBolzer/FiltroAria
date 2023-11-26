@@ -1,6 +1,6 @@
 #include "main.h"
 
-Debounce button(BUTTON_PIN); // costruisco classe su bottone pin
+Button button(BUTTON_PIN); // costruisco classe su bottone pin
 
 void setup()
 {
@@ -40,9 +40,16 @@ void loop()
     power(PM_READ);
     setPwmDuty(fanPower); // Change this value 0-100 to adjust duty cycle
 #endif
-    if (button.scan())
+    Pressed b = button.scan();
+    if (b == Pressed::SHORT)
     {
-        Serial.println("pulsante premuto da >50ms");
+        Serial.println("pulsante short");
+        FORCE_POWER = 0;
+    }
+    else if (b == Pressed::LONG)
+    {
+        Serial.println("pulsante long");
+        FORCE_POWER = millis();
     }
 }
 
@@ -101,23 +108,39 @@ void setPwmDuty(byte duty)
 
 void power(uint32_t read)
 {
-    if (millis() > fanTimer)
+    if (FORCE_POWER != 0)
     {
-        float power = (float(maxPower - minPower) / float(maxPowerPM - minPowerPM)) * (float(read - minPowerPM)) + float(minPower); // retta passatper per (minPowerPM, minPower) e (maxPowerPM, maxPower)
+        if (millis() - FORCE_POWER < 30000 * 60)
+        {
+            fanPower = 100;
+        }
+        else
+        {
+            FORCE_POWER = 0;
+            fanPower = 20;
+        }
+    }
+    else
+    {
+        if (millis() > fanTimer)
+        {
+            float power = (float(maxPower - minPower) / float(maxPowerPM - minPowerPM)) * (float(read - minPowerPM)) + float(minPower); // retta passatper per (minPowerPM, minPower) e (maxPowerPM, maxPower)
 
-        if (power > float(maxPower))
-        {
-            power = maxPower;
-        }
-        if (power < float(minPower))
-        {
-            power = minPower;
-        }
-        fanPower = int(power);
+            if (power > float(maxPower))
+            {
+                power = maxPower;
+            }
+            if (power < float(minPower))
+            {
+                power = minPower;
+            }
+            fanPower = int(power);
+            fanTimer = millis() + CHANGE_FAN;
+
 #ifdef LOG
-        Serial.print("power: ");
-        Serial.println(fanPower);
+            Serial.print("power: ");
+            Serial.println(fanPower);
 #endif
-        fanTimer = millis() + CHANGE_FAN;
+        }
     }
 }

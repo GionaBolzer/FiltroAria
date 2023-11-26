@@ -1,20 +1,21 @@
-#include "debounce.h";
+#include "debounce.h"
+
+enum Pressed
+{
+    NO,
+    SHORT,
+    LONG
+};
 
 class Button
 {
     int pinValue;
-    Debounce debounce;
-    int timer;
-
-    bool is_pressing();
+    Debounce debLow;
+    Debounce debHigh;
+    unsigned long timer;
+    bool returned = false;
 
 public:
-    Button(int pinValue);
+    Button(int _pinValue);
     Pressed scan();
-}
-
-enum Pressed {
-    NO,
-    SHORT,
-    LONG,
-}
+};

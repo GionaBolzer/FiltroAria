@@ -2,7 +2,7 @@
 #include <SoftwareSerial.h>
 #include "PMS.h"
 #include "pindef.h"
-#include "./Utility/debounce.h"
+#include "./Utility/button.h"
 
 ///////////////////////////////////// SENSOR ////////////////////////////////////////////
 #ifdef PMSENSOR
@@ -29,8 +29,10 @@ uint16_t fanPower = 20;   // default power is 20 %
 uint16_t minPower = 20;   // min power fan at 20%
 uint16_t maxPower = 100;  // max power fan at 100%
 uint32_t minPowerPM = 0;  // set pm read at wich the fan is at min value
-uint32_t maxPowerPM = 38; // set pm read at wich the fan is at max value
+uint32_t maxPowerPM = 10; // set pm read at wich the fan is at max value
 #endif
+
+unsigned long FORCE_POWER = 0;
 
 void wakeUpSensor(); // wake uo every 120s
 

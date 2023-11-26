@@ -1,16 +1,15 @@
 #include "button.h"
+#include "Arduino.h"
 
-Button::Button(int _pinValue)
+Button::Button(int _pinValue) : pinValue(_pinValue), debLow(Debounce(_pinValue, false)), debHigh(_pinValue, true)
 {
-    debounce = Debounce(_pinValue);
-    pinValue = _pinValue
 }
 
 Pressed Button::scan()
 {
-    if (!is_pressing())
+    if (timer <= 0)
     {
-        if (debounce.scan())
+        if (debLow.scan())
         {
             timer = millis();
             return Pressed::NO;
@@ -19,19 +18,25 @@ Pressed Button::scan()
         return Pressed::NO;
     }
 
-    if (millis() >= 2000 + timer)
+    if (!returned && millis() >= 1300 + timer)
     {
+        returned = true;
         return Pressed::LONG;
     }
 
-    if (digitalRead(pinValue) == HIGH)
+    if (debHigh.scan()) // button not pressed anymore
     {
-        timer = 0;
-    }
-    return Pressed::SHORT
-}
+        if (returned)
+        {
+            timer = 0;
+            returned = false;
+            return Pressed::NO;
+        }
 
-bool Button::is_pressing()
-{
-    return timer > 0;
-}
+        timer = 0;
+        return Pressed::SHORT;
+    }
+
+    // button still pressed, but from less than 2000ms
+    return Pressed::NO;
+};
