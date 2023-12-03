@@ -3,6 +3,7 @@
 #include "PMS.h"
 #include "pindef.h"
 #include "./Utility/button.h"
+#include "./Screen/screen.h"
 
 ///////////////////////////////////// SENSOR ////////////////////////////////////////////
 #ifdef PMSENSOR
@@ -41,3 +42,38 @@ void readSensor();
 void setPwmDuty(byte duty);
 
 void power(uint32_t read);
+
+void mydisplay();
+void testdrawbitmap(const uint8_t *bitmap, uint8_t w, uint8_t h);
+void testdrawchar(void);
+void testdrawcircle(void);
+void testfillrect(void);
+void testdrawtriangle(void);
+void testfilltriangle(void);
+void testdrawroundrect(void);
+void testfillroundrect(void);
+void testdrawrect(void);
+void testdrawline();
+
+// void testscrolltext(void) {
+//   display.setTextSize(2);
+//   display.setTextColor(WHITE);
+//   display.setCursor(10,0);
+//   display.clearDisplay();
+//   display.println("scroll");
+//   display.display();
+
+//   display.startscrollright(0x00, 0x0F);
+//   delay(2000);
+//   display.stopscroll();
+//   delay(1000);
+//   display.startscrollleft(0x00, 0x0F);
+//   delay(2000);
+//   display.stopscroll();
+//   delay(1000);
+//   display.startscrolldiagright(0x00, 0x07);
+//   delay(2000);
+//   display.startscrolldiagleft(0x00, 0x07);
+//   delay(2000);
+//   display.stopscroll();
+// }*/
