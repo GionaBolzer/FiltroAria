@@ -1,7 +1,7 @@
 #include "main.h"
 
 Button button(BUTTON_PIN); // costruisco classe su bottone pin
-Screen display();
+Screen display(0);
 
 void setup()
 {

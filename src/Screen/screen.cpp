@@ -1,6 +1,6 @@
 #include "screen.h"
 
-Screen::Screen() : display(Adafruit_SH1106(OLED_RESET))
+Screen::Screen(int i): iter(i), display(Adafruit_SH1106(OLED_RESET))
 {
 }
 

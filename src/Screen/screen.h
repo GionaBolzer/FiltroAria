@@ -15,6 +15,6 @@ class Screen
     Adafruit_SH1106 display;
 
 public:
-    Screen();
+    Screen(int i);
     home(int i);
 };
