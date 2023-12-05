@@ -9,12 +9,16 @@
 #define YPOS 1
 #define DELTAY 2
 
+
 class Screen
 {
     int iter;
+    unsigned delayRefresh = 200;
+    unsigned long timer;
     Adafruit_SH1106 display;
 
 public:
     Screen();
-    void home(int i);
+    void testIter(int change);
+    void home(int pm2_5, int pm10, int power);
 };

@@ -48,13 +48,13 @@ void loop()
     Pressed b = button.scan();
     if (b == Pressed::SHORT)
     {
-        display.home(1);
+        display.testIter(1);
         // Serial.println("pulsante short");
         //  FORCE_POWER = 0;
     }
     else if (b == Pressed::LONG)
     {
-        display.home(-1);
+        display.testIter(-1);
         // Serial.println("pulsante long");
         //  FORCE_POWER = millis();
     }
