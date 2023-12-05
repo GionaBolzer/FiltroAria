@@ -1,10 +1,10 @@
 #include "screen.h"
 
-Screen::Screen(int i): iter(i), display(Adafruit_SH1106(OLED_RESET))
+Screen::Screen(): display(Adafruit_SH1106(OLED_RESET))
 {
 }
 
-Screen::home(int change)
+void Screen::home(int change)
 {
     iter += change;
     display.clearDisplay();
