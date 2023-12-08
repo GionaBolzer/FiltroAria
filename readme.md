@@ -9,4 +9,8 @@ Io ho preso tutto su Amazon, penso che su Aliexpress risparmi parecchio ma bisog
 5. serve un arduino o similiare, meglio nano
 6. Sensore di particolato. Serve il PMS5003, o comunque un sensore PMS. Su amazon adesso costano un botto su Ali la metà [PMS5003](https://it.aliexpress.com/item/32944660534.html?spm=a2g0o.productlist.main.1.46653T0q3T0qCa&algo_pvid=1987cc27-e0a0-4a2d-a1fc-4a23bb794278&aem_p4p_detail=202310070040155063549238633600017337564&algo_exp_id=1987cc27-e0a0-4a2d-a1fc-4a23bb794278-0&pdp_npi=4%40dis%21EUR%2116.53%2115.21%21%21%2117.02%21%21%40211b88f016966644155864802e0dde%2110000001648704477%21sea%21IT%210%21AB&curPageLogUid=eR95rfTKWDtP&search_p4p_id=202310070040155063549238633600017337564_1)
 
+# Pinout
 ![Diagramma](DiagrammaFiltroAria.jpg)
+
+# Interfaccia
+![Interfaccia](Schermi.jpg)
