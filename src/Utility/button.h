@@ -1,3 +1,5 @@
+#ifndef BUTTON_H
+#define BUTTON_H
 #include "debounce.h"
 
 enum Pressed
@@ -19,3 +21,5 @@ public:
     Button(int _pinValue);
     Pressed scan();
 };
+
+#endif

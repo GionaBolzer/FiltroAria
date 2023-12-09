@@ -1,3 +1,6 @@
+#ifndef DEBOUNCE_H
+#define DEBOUNCE_H
+
 class Debounce
 {
     int _pinValue;
@@ -10,3 +13,5 @@ public:
     Debounce(int pinValue, bool mode);
     bool scan(); // return true if button is in `mode`
 };
+
+#endif

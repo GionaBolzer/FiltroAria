@@ -4,7 +4,7 @@
 #include "pindef.h"
 #include "./Utility/button.h"
 #include "./Screen/screen.h"
-
+#include "./Logic/state.h"
 ///////////////////////////////////// SENSOR ////////////////////////////////////////////
 #ifdef PMSENSOR
 SoftwareSerial pmsSerial(RxPin, TxPin);

@@ -9,7 +9,6 @@
 #define YPOS 1
 #define DELTAY 2
 
-
 class Screen
 {
     int iter = 0;
@@ -22,4 +21,8 @@ public:
     void begin();
     void testIter(int change);
     void home(int pm2_5, int pm10, int power);
+    void paginaMin();
+    void paginaMax();
+    void minsel(int time);
+    void maxsel(int time);
 };

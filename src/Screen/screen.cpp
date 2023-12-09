@@ -15,9 +15,9 @@ void Screen::begin()
 
 void Screen::testIter(int change)
 {
+    iter += change;
     if (millis() - timer > delayRefresh)
     {
-        iter += change;
         display.clearDisplay();
         display.setCursor(0, 0);
         display.print("Iter: ");
@@ -29,31 +29,73 @@ void Screen::testIter(int change)
 
 void Screen::home(int pm2_5, int pm10, int power)
 {
-    display.clearDisplay();
-    display.print("Pm 10: ");
-    display.print(pm2_5);
-    display.print(" u/m3");
-    display.setCursor(0, 15);
-    display.print("Pm 10: ");
-    display.print(pm10);
-    display.print(" u/m3");
-    display.setCursor(0, 30);
-    display.print("Power: ");
-    display.print(power);
-    display.print(" %");
-    display.display();
-    delay(2000);
-    //     if (millis() - timer > delayRefresh)
-    //     {
 
-    //         display.clearDisplay();
-    //         display.setCursor(10, 10);
-    //         display.print("Pm 2.5" + char(pm2_5));
-    //         display.setCursor(30, 10);
-    //         display.print("Pm 10" + char(pm10));
-    //         display.setCursor(40, 10);
-    //         display.print("Power" + char(power));
-    //         display.display();
-    //         timer = millis();
-    //     }
+    if (millis() - timer > delayRefresh)
+    {
+        display.clearDisplay();
+        display.setCursor(0, 0);
+        display.print("Pm 2.5: ");
+        display.print(pm2_5);
+        display.println(" u/m3");
+
+        // display.setCursor(0, 15);
+        display.print("Pm 10: ");
+        display.print(pm10);
+        display.println(" u/m3");
+
+        // display.setCursor(0, 30);
+        display.print("Power: ");
+        display.print(power);
+        display.print(" %");
+        display.display();
+    }
+}
+
+void Screen::paginaMin()
+{
+    if (millis() - timer > delayRefresh)
+    {
+        display.clearDisplay();
+        display.setCursor(0, 0);
+        display.print("Modalita min");
+        display.display();
+        timer = millis();
+    }
+}
+void Screen::paginaMax()
+{
+    if (millis() - timer > delayRefresh)
+    {
+        display.clearDisplay();
+        display.setCursor(0, 0);
+        display.print("Modalita max");
+        display.display();
+        timer = millis();
+    }
+}
+void Screen::minsel(int timer)
+{
+    if (millis() - timer > delayRefresh)
+    {
+        display.clearDisplay();
+        display.setCursor(0, 0);
+        display.println("Modalita min sel");
+        display.print("timer ;");
+        display.print(timer);
+        display.display();
+        timer = millis();
+    }
+}
+void Screen::maxsel(int timer)
+{
+    if (millis() - timer > delayRefresh)
+    {
+        display.clearDisplay();
+        display.setCursor(0, 0);
+        display.println("Modalita max sel");
+        display.print("timer ;");
+        display.print(timer);
+        display.display();
+        timer = millis();
+    }
 }

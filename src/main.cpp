@@ -2,10 +2,11 @@
 
 Button button(BUTTON_PIN); // costruisco classe su bottone pin
 Screen displayClasse;
-//Adafruit_SH1106 display(OLED_RESET);
+Logica state;
 
 void setup()
 {
+    // state = Home();
 
 #ifdef LOG
     Serial.begin(115200);
@@ -17,8 +18,8 @@ void setup()
     // display.display();
     // delay(2000);
     displayClasse.begin();
-    displayClasse.home(10,15,30);
-    displayClasse.testIter(0);
+    // displayClasse.home(10, 15, 30);
+    // displayClasse.testIter(0);
 #endif
 
 #ifdef PMSENSOR
@@ -53,18 +54,37 @@ void loop()
 #endif
 
     Pressed b = button.scan();
-    if (b == Pressed::SHORT)
+    switch (state.change(b))
     {
-        displayClasse.testIter(1);
-        Serial.println("pulsante short");
-        //  FORCE_POWER = 0;
+    case State::HOME:
+        displayClasse.home(10, 10, 10);
+        break;
+    case State::MIN:
+        displayClasse.paginaMin();
+        break;
+    case State::MAX:
+        displayClasse.paginaMax();
+        break;
+    case State::MINSEL:
+        displayClasse.minsel(state.time);
+        break;
+    case State::MAXSEL:
+        displayClasse.maxsel(state.time);
+        break;
     }
-    else if (b == Pressed::LONG)
-    {
-        displayClasse.testIter(-1);
-        Serial.println("pulsante long");
-        //  FORCE_POWER = millis();
-    }
+
+    // if (b == Pressed::SHORT)
+    // {
+    //     displayClasse.testIter(1);
+    //     Serial.println("pulsante short");
+    //     //  FORCE_POWER = 0;
+    // }
+    // else if (b == Pressed::LONG)
+    // {
+    //     displayClasse.testIter(-1);
+    //     Serial.println("pulsante long");
+    //     //  FORCE_POWER = millis();
+    // }
 }
 
 #ifdef PMSENSOR
