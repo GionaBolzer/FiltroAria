@@ -12,13 +12,14 @@
 
 class Screen
 {
-    int iter;
+    int iter = 0;
     unsigned delayRefresh = 200;
     unsigned long timer;
     Adafruit_SH1106 display;
 
 public:
     Screen();
+    void begin();
     void testIter(int change);
     void home(int pm2_5, int pm10, int power);
 };
