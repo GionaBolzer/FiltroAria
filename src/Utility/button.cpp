@@ -19,7 +19,7 @@ Pressed Button::scan()
         return Pressed::NO;
     }
 
-    if (!returned && millis() >= 1300 + timer)
+    if (!returned && millis() >= 500 + timer)
     {
         returned = true;
         return Pressed::LONG;
