@@ -23,6 +23,10 @@ State Logica::change(Pressed button)
         {
             schermo = State::HOME;
         }
+        else if (schermo == State::MAX)
+        {
+            schermo = State::HOMETIMER;
+        }
         else if (schermo == State::MAXSEL)
         {
             time += 5;

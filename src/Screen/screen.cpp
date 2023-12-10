@@ -12,14 +12,11 @@ void Screen::begin()
     display.setTextColor(WHITE);
     display.setCursor(0, 0);
     display.clearDisplay();
-    home(10,10,10,0);
-    display.display();
 }
 
 void Screen::home(int pm2_5, int pm10, int power, int Timer)
 {
-
-    if (millis() - timer > delayRefresh)
+    if (millis() - timer > delayRefresh || timer == 0)
     {
         display.clearDisplay();
         display.setCursor(5, 10);
@@ -38,10 +35,10 @@ void Screen::home(int pm2_5, int pm10, int power, int Timer)
         {
             // utente ha seleziona un temo dalla modalità
             display.setCursor(5, 55);
-            timer = Timer;
             display.print("Timer: ");
             display.print(Timer);
         }
+        timer = millis();
         display.display();
     }
 }
@@ -90,7 +87,7 @@ void Screen::minsel(int Timer)
         display.setCursor(35, 35);
         display.print("Timer: ");
         display.print(Timer);
-        display.drawRoundRect(30, 32, 65, 13, 3, WHITE);
+        display.drawRoundRect(30, 32, 70, 13, 3, WHITE);
         display.display();
         timer = millis();
     }
@@ -107,7 +104,7 @@ void Screen::maxsel(int Timer)
         display.setCursor(35, 35);
         display.print("Timer: ");
         display.print(Timer);
-        display.drawRoundRect(30, 32, 65, 13, 3, WHITE);
+        display.drawRoundRect(30, 32, 70, 13, 3, WHITE);
         display.display();
         timer = millis();
     }

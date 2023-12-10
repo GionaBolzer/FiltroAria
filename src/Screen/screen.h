@@ -1,3 +1,6 @@
+#ifndef SCREEN_H
+#define SCREEN_H
+
 #include <SPI.h>
 #include <Wire.h>
 #include <Adafruit_GFX.h>
@@ -11,12 +14,12 @@
 
 class Screen
 {
-    int time = 0;
     unsigned delayRefresh = 200;
-    unsigned long timer;
+    unsigned long timer = 0;
     Adafruit_SH1106 display;
 
 public:
+    int time = 0;
     Screen();
     void begin();
     void home(int pm2_5, int pm10, int power, int Timer);
@@ -25,3 +28,4 @@ public:
     void minsel(int timer);
     void maxsel(int timer);
 };
+#endif

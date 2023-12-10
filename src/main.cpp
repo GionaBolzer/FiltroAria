@@ -18,6 +18,8 @@ void setup()
     // display.display();
     // delay(2000);
     displayClasse.begin();
+    delay(100);
+    displayClasse.home(10,10,10,0);
     // displayClasse.home(10, 15, 30);
     // displayClasse.testIter(0);
 #endif

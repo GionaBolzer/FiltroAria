@@ -2,7 +2,7 @@
 #define STATE_H
 
 #include "../Utility/button.h"
-
+#include "../Screen/screen.h"
 enum State
 {
     HOME,
