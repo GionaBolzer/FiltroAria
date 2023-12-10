@@ -11,7 +11,7 @@
 
 class Screen
 {
-    int iter = 0;
+    int time = 0;
     unsigned delayRefresh = 200;
     unsigned long timer;
     Adafruit_SH1106 display;
@@ -19,10 +19,9 @@ class Screen
 public:
     Screen();
     void begin();
-    void testIter(int change);
-    void home(int pm2_5, int pm10, int power);
-    void paginaMin();
-    void paginaMax();
-    void minsel(int time);
-    void maxsel(int time);
+    void home(int pm2_5, int pm10, int power, int Timer);
+    void paginaMin(int timer);
+    void paginaMax(int timer);
+    void minsel(int timer);
+    void maxsel(int timer);
 };

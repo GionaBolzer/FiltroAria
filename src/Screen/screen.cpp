@@ -11,90 +11,103 @@ void Screen::begin()
     display.setTextSize(1);
     display.setTextColor(WHITE);
     display.setCursor(0, 0);
+    display.clearDisplay();
+    home(10,10,10,0);
+    display.display();
 }
 
-void Screen::testIter(int change)
-{
-    iter += change;
-    if (millis() - timer > delayRefresh)
-    {
-        display.clearDisplay();
-        display.setCursor(0, 0);
-        display.print("Iter: ");
-        display.println(iter);
-        display.display();
-        timer = millis();
-    }
-}
-
-void Screen::home(int pm2_5, int pm10, int power)
+void Screen::home(int pm2_5, int pm10, int power, int Timer)
 {
 
     if (millis() - timer > delayRefresh)
     {
         display.clearDisplay();
-        display.setCursor(0, 0);
+        display.setCursor(5, 10);
         display.print("Pm 2.5: ");
         display.print(pm2_5);
         display.println(" u/m3");
-
-        // display.setCursor(0, 15);
+        display.setCursor(5, 25);
         display.print("Pm 10: ");
         display.print(pm10);
         display.println(" u/m3");
-
-        // display.setCursor(0, 30);
+        display.setCursor(5, 40);
         display.print("Power: ");
         display.print(power);
-        display.print(" %");
+        display.println(" %");
+        if (Timer != 0)
+        {
+            // utente ha seleziona un temo dalla modalità
+            display.setCursor(5, 55);
+            timer = Timer;
+            display.print("Timer: ");
+            display.print(Timer);
+        }
         display.display();
     }
 }
 
-void Screen::paginaMin()
+void Screen::paginaMin(int Timer)
 {
     if (millis() - timer > delayRefresh)
     {
         display.clearDisplay();
-        display.setCursor(0, 0);
-        display.print("Modalita min");
+        display.setCursor(35, 0);
+        display.setTextSize(1);
+        display.println("MIN MODE");
+        display.setTextSize(1);
+        display.setCursor(35, 35);
+        display.print("Timer: ");
+        display.print(Timer);
         display.display();
         timer = millis();
     }
 }
-void Screen::paginaMax()
+void Screen::paginaMax(int Timer)
 {
     if (millis() - timer > delayRefresh)
     {
         display.clearDisplay();
-        display.setCursor(0, 0);
-        display.print("Modalita max");
+        display.setCursor(35, 0);
+        display.setTextSize(1);
+        display.println("MAX MODE");
+        display.setTextSize(1);
+        display.setCursor(35, 35);
+        display.print("Timer: ");
+        display.print(Timer);
         display.display();
         timer = millis();
     }
 }
-void Screen::minsel(int timer)
+void Screen::minsel(int Timer)
 {
     if (millis() - timer > delayRefresh)
     {
         display.clearDisplay();
-        display.setCursor(0, 0);
-        display.println("Modalita min sel");
-        display.print("timer ;");
-        display.print(timer);
+        display.setCursor(35, 0);
+        display.setTextSize(1);
+        display.println("MIN MODE");
+        display.setTextSize(1);
+        display.setCursor(35, 35);
+        display.print("Timer: ");
+        display.print(Timer);
+        display.drawRoundRect(30, 32, 65, 13, 3, WHITE);
         display.display();
         timer = millis();
     }
 }
-void Screen::maxsel(int timer)
+void Screen::maxsel(int Timer)
 {
     if (millis() - timer > delayRefresh)
     {
         display.clearDisplay();
-        display.setCursor(0, 0);
-        display.println("Modalita max sel");
-        display.print("timer ;");
-        display.print(timer);
+        display.setCursor(35, 0);
+        display.setTextSize(1);
+        display.println("MAX MODE");
+        display.setTextSize(1);
+        display.setCursor(35, 35);
+        display.print("Timer: ");
+        display.print(Timer);
+        display.drawRoundRect(30, 32, 65, 13, 3, WHITE);
         display.display();
         timer = millis();
     }

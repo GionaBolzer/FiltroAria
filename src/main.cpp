@@ -57,13 +57,16 @@ void loop()
     switch (state.change(b))
     {
     case State::HOME:
-        displayClasse.home(10, 10, 10);
+        displayClasse.home(10, 10, 10,0);
         break;
+    case State::HOMETIMER:
+        displayClasse.home(10, 10, 10, state.time);
+    break;
     case State::MIN:
-        displayClasse.paginaMin();
+        displayClasse.paginaMin(state.time);
         break;
     case State::MAX:
-        displayClasse.paginaMax();
+        displayClasse.paginaMax(state.time);
         break;
     case State::MINSEL:
         displayClasse.minsel(state.time);

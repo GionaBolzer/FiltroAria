@@ -6,10 +6,12 @@ State Logica::change(Pressed button)
     {
         if (schermo == State::HOME)
         {
+            time = 5;
             schermo = State::MIN;
         }
         else if (schermo == State::MIN)
         {
+            time = 5;
             schermo = State::MAX;
         }
         else if (schermo == State::MINSEL)
@@ -26,6 +28,12 @@ State Logica::change(Pressed button)
             time += 5;
             schermo = State::MAXSEL;
         }
+        if (schermo == State::HOMETIMER)
+        {
+            time = 5;
+            schermo = State::MIN;
+            return schermo;
+        }
         return schermo;
     }
 
@@ -36,6 +44,12 @@ State Logica::change(Pressed button)
             schermo = State::HOME;
             return schermo;
         }
+        if (schermo == State::HOMETIMER)
+        {
+            time = 5;
+            schermo = State::HOME;
+            return schermo;
+        }
         if (schermo == State::MIN)
         {
             schermo = State::MINSEL;
@@ -43,7 +57,7 @@ State Logica::change(Pressed button)
         }
         if (schermo == State::MINSEL)
         {
-            schermo = State::HOME;
+            schermo = State::HOMETIMER;
             return schermo;
         }
         if (schermo == State::MAX)
@@ -53,7 +67,7 @@ State Logica::change(Pressed button)
         }
         if (schermo == State::MAXSEL)
         {
-            schermo = State::HOME;
+            schermo = State::HOMETIMER;
             return schermo;
         }
     }

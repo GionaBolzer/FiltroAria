@@ -6,6 +6,7 @@
 enum State
 {
     HOME,
+    HOMETIMER,
     MIN,
     MINSEL,
     MAX,
@@ -17,7 +18,7 @@ class Logica
     State schermo = State::HOME;
 
 public:
-    int time = 0;
+    int time = 5;
     State change(Pressed button);
 };
 
