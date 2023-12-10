@@ -5,6 +5,8 @@
 #include <Wire.h>
 #include <Adafruit_GFX.h>
 #include <Adafruit_SH1106.h>
+#include "../Logic/state.h"
+
 #define OLED_RESET 4
 
 #define NUMFLAKES 10

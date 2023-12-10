@@ -12,13 +12,22 @@ enum State
     MAXSEL,
 };
 
+enum TimerMode
+{
+    MINIMO,
+    MASSIMO,
+};
+
 class Logica
 {
-    State schermo = State::HOME;
+    
 
 public:
+    TimerMode timerMode;
+    State schermo = State::HOME;
     int timeSchermo = 5;
     int timeHome = 0;
+    unsigned long timerHome = 0;
     State change(Pressed button);
 };
 

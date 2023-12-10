@@ -6,7 +6,7 @@ Screen::Screen() : display(Adafruit_SH1106(OLED_RESET))
 
 void Screen::begin()
 {
-    Serial.println("Schermo init");
+
     display.begin(SH1106_SWITCHCAPVCC, 0x3C);
     display.setTextSize(1);
     display.setTextColor(WHITE);

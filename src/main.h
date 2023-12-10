@@ -6,6 +6,11 @@
 #include "./Screen/screen.h"
 #include "./Logic/state.h"
 ///////////////////////////////////// SENSOR ////////////////////////////////////////////
+#ifdef SCREEN
+#define REFRESH_HOME 1000        // refresh screen home every second
+unsigned long homeTimer = 0;
+#endif
+uint32_t PM_READ = 0;
 #ifdef PMSENSOR
 SoftwareSerial pmsSerial(RxPin, TxPin);
 PMS pms(pmsSerial);
@@ -14,7 +19,7 @@ PMS::DATA data;
 #define WAIT_PM 30000            // wait 30s for sensor to stabilize
 unsigned long sensorTimer = 0;
 bool SENSOR_STATE = false; // if false sensor sleep
-uint32_t PM_READ = 0;
+
 #endif
 
 #ifdef FAN
@@ -54,3 +59,4 @@ void testdrawroundrect(void);
 void testfillroundrect(void);
 void testdrawrect(void);
 void testdrawline();
+void refreshHome();

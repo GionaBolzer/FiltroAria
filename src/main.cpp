@@ -19,7 +19,7 @@ void setup()
     // delay(2000);
     displayClasse.begin();
     delay(100);
-    displayClasse.home(10,10,10,0);
+    displayClasse.home(10, 10, fanPower, 0);
     // displayClasse.home(10, 15, 30);
     // displayClasse.testIter(0);
 #endif
@@ -54,39 +54,58 @@ void loop()
     power(PM_READ);
     setPwmDuty(fanPower); // Change this value 0-100 to adjust duty cycle
 #endif
-
+    refreshHome();
     Pressed b = button.scan();
     switch (state.change(b))
     {
     case State::HOME:
-        displayClasse.home(10, 10, 10,state.timeHome);
+        displayClasse.home(10, 10, fanPower, state.timeHome);
         break;
     case State::MIN:
         displayClasse.paginaMin(state.timeSchermo);
+
         break;
     case State::MAX:
         displayClasse.paginaMax(state.timeSchermo);
+
         break;
     case State::MINSEL:
         displayClasse.minsel(state.timeSchermo);
+
         break;
     case State::MAXSEL:
         displayClasse.maxsel(state.timeSchermo);
+
         break;
     }
+}
 
-    // if (b == Pressed::SHORT)
-    // {
-    //     displayClasse.testIter(1);
-    //     Serial.println("pulsante short");
-    //     //  FORCE_POWER = 0;
-    // }
-    // else if (b == Pressed::LONG)
-    // {
-    //     displayClasse.testIter(-1);
-    //     Serial.println("pulsante long");
-    //     //  FORCE_POWER = millis();
-    // }
+void refreshHome()
+{
+    if (state.schermo == State::HOME)
+    {
+        if (state.timeHome > 0 && FORCE_POWER == 0)
+        {
+            FORCE_POWER = 1;
+        }
+        if (state.timeHome <= 0 && FORCE_POWER == 1)
+        {
+            state.timeHome = 0;
+            FORCE_POWER = 0;
+            fanPower = 20;
+        }
+        if (millis() > homeTimer + REFRESH_HOME)
+        {
+            if (state.timeHome > 0 && int((millis() - state.timerHome) / 60000) >= 1)
+            {
+                state.timeHome -= int((millis() - state.timerHome) / 60000);
+                state.timerHome = millis();
+            }
+
+            displayClasse.home(10, 10, fanPower, state.timeHome);
+            homeTimer = millis();
+        }
+    }
 }
 
 #ifdef PMSENSOR
@@ -147,16 +166,15 @@ void setPwmDuty(byte duty)
 
 void power(uint32_t read)
 {
-    if (FORCE_POWER != 0)
+    if (FORCE_POWER == 1)
     {
-        if (millis() - FORCE_POWER < 30000 * 60)
+        if (state.timerMode == TimerMode::MASSIMO)
         {
             fanPower = 100;
         }
-        else
+        if (state.timerMode == TimerMode::MINIMO)
         {
-            FORCE_POWER = 0;
-            fanPower = 20;
+            fanPower = 25;
         }
     }
     else

@@ -37,6 +37,7 @@ State Logica::change(Pressed button)
         {
             timeSchermo = 5;
             timeHome = 0;
+            timerHome = 0;
             schermo = State::HOME;
             return schermo;
         }
@@ -49,6 +50,8 @@ State Logica::change(Pressed button)
         {
             schermo = State::HOME;
             timeHome = timeSchermo;
+            timerMode = TimerMode::MINIMO;
+            timerHome = millis();
             return schermo;
         }
         if (schermo == State::MAX)
@@ -60,6 +63,8 @@ State Logica::change(Pressed button)
         {
             schermo = State::HOME;
             timeHome = timeSchermo;
+            timerMode = TimerMode::MASSIMO;
+            timerHome = millis();
             return schermo;
         }
     }
