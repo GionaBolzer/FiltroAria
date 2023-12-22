@@ -151,6 +151,7 @@ void readSensor()
 
 void setPwmDuty(byte duty)
 {
+    // TO DO: aggiungere il pwm per la black pill
 #ifdef ARDUINO_AVR_NANO
     OCR1A = (word)(duty * TCNT1_TOP) / 100;
 #endif
@@ -196,6 +197,7 @@ void power(uint32_t read)
 
 void PwmArd()
 {
+    // TO DO: aggiungere il pwm setup per la black pill
     #ifdef ARDUINO_AVR_NANO
     pinMode(OC1A_PIN, OUTPUT);
 
