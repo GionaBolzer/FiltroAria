@@ -197,7 +197,7 @@ void power(uint32_t read)
 
 void PwmArd()
 {
-    // TO DO: aggiungere il pwm setup per la black pill
+    
     #ifdef ARDUINO_AVR_NANO
     pinMode(OC1A_PIN, OUTPUT);
 
@@ -209,5 +209,10 @@ void PwmArd()
     TCCR1A |= (1 << COM1A1) | (1 << WGM11);
     TCCR1B |= (1 << WGM13) | (1 << CS10);
     ICR1 = TCNT1_TOP;
+    #endif
+
+// TO DO: aggiungere il pwm setup per la black pill
+    #ifdef STM32F411xE
+    
     #endif
 }
