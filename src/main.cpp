@@ -6,7 +6,6 @@ Logica state;
 
 void setup()
 {
-    // state = Home();
 
 #ifdef LOG
     Serial.begin(115200);
@@ -14,9 +13,7 @@ void setup()
 #endif
 
 #ifdef SCREEN
-    // display.begin(SH1106_SWITCHCAPVCC, 0x3C);
-    // display.display();
-    // delay(2000);
+
     displayClasse.begin();
     delay(100);
     displayClasse.home(10, 10, fanPower, 0);
@@ -28,17 +25,11 @@ void setup()
     pmsSerial.begin(9600);
     pms.passiveMode();
 #endif
+
 #ifdef FAN
-    pinMode(OC1A_PIN, OUTPUT);
-
-    // Clear Timer1 control and count registers
-    TCCR1A = 0;
-    TCCR1B = 0;
-    TCNT1 = 0;
-
-    TCCR1A |= (1 << COM1A1) | (1 << WGM11);
-    TCCR1B |= (1 << WGM13) | (1 << CS10);
-    ICR1 = TCNT1_TOP;
+#ifdef ARDUINO_AVR_NANO
+    PwmArd();
+#endif
     setPwmDuty(fanPower);
 #endif
 }
@@ -158,10 +149,11 @@ void readSensor()
 }
 #endif
 
-#ifdef FAN
 void setPwmDuty(byte duty)
 {
+#ifdef ARDUINO_AVR_NANO
     OCR1A = (word)(duty * TCNT1_TOP) / 100;
+#endif
 }
 
 void power(uint32_t read)
@@ -201,4 +193,19 @@ void power(uint32_t read)
         }
     }
 }
-#endif
+
+void PwmArd()
+{
+    #ifdef ARDUINO_AVR_NANO
+    pinMode(OC1A_PIN, OUTPUT);
+
+    // Clear Timer1 control and count registers
+    TCCR1A = 0;
+    TCCR1B = 0;
+    TCNT1 = 0;
+
+    TCCR1A |= (1 << COM1A1) | (1 << WGM11);
+    TCCR1B |= (1 << WGM13) | (1 << CS10);
+    ICR1 = TCNT1_TOP;
+    #endif
+}

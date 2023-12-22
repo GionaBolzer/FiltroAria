@@ -22,6 +22,8 @@ bool SENSOR_STATE = false; // if false sensor sleep
 
 #endif
 
+uint16_t fanPower = 20;
+
 #ifdef FAN
 #define CHANGE_FAN 60000 // wait 30s for sensor to stabilize
 unsigned long fanTimer = 0;
@@ -31,7 +33,7 @@ const byte OC1B_PIN = 10;
 const word PWM_FREQ_HZ = 25000; // Adjust this value to adjust the frequency
 const word TCNT1_TOP = 16000000 / (2 * PWM_FREQ_HZ);
 
-uint16_t fanPower = 20;   // default power is 20 %
+   // default power is 20 %
 uint16_t minPower = 20;   // min power fan at 20%
 uint16_t maxPower = 100;  // max power fan at 100%
 uint32_t minPowerPM = 0;  // set pm read at wich the fan is at min value
@@ -60,3 +62,4 @@ void testfillroundrect(void);
 void testdrawrect(void);
 void testdrawline();
 void refreshHome();
+void PwmArd();
