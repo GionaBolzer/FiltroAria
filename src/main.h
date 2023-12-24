@@ -61,3 +61,5 @@ void power(uint32_t read);
 void mydisplay();
 
 void PwmInit();
+
+void refreshHome();

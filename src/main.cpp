@@ -40,9 +40,9 @@ void loop()
 #endif
 
 #ifdef FAN
-    power(PM_READ);
+    power(PM_READ_2_5);
     setPwmDuty(fanPower); // Change this value 0-100 to adjust duty cycle
-#endi
+#endif
 
     //check state button retrun short or long
     Pressed b = button.scan();
@@ -226,6 +226,6 @@ void PwmInit()
 
 // TO DO: aggiungere il pwm setup per la black pill
     #ifdef STM32F411xE
-    
+    pinMode(PB10, OUTPUT);
     #endif
 }
