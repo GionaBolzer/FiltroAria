@@ -3,6 +3,10 @@
 Button button(BUTTON_PIN); // costruisco classe su bottone pin
 Screen displayClasse;
 Logica state;
+// STM32Duino harware timer
+#ifdef STM32F411xE
+HardwareTimer *MyTim;
+#endif
 
 void setup()
 {
@@ -16,9 +20,7 @@ void setup()
 
     displayClasse.begin();
     delay(100);
-    displayClasse.home(10, 10, fanPower, 0);
-    // displayClasse.home(10, 15, 30);
-    // displayClasse.testIter(0);
+    displayClasse.home(PM_READ_2_5, PM_READ_10, fanPower, state.timeHome);
 #endif
 
 #ifdef PMSENSOR
@@ -44,7 +46,7 @@ void loop()
     setPwmDuty(fanPower); // Change this value 0-100 to adjust duty cycle
 #endif
 
-    //check state button retrun short or long
+    // check state button retrun short or long
     Pressed b = button.scan();
 
 #ifdef SCREEN
@@ -161,9 +163,13 @@ void readSensor()
 // WRITE DUTY CYCLE FOR PWM
 void setPwmDuty(byte duty)
 {
-    // TO DO: aggiungere il pwm per la black pill
+
 #ifdef ARDUINO_AVR_NANO
     OCR1A = (word)(duty * TCNT1_TOP) / 100;
+#endif
+
+#ifdef STM32F411xE
+    MyTim->setPWM(channel, PB10, PWM_FREQ_HZ, duty);
 #endif
 }
 
@@ -206,12 +212,11 @@ void power(uint32_t read)
     }
 }
 
-
 // HARDWARE SETUP FOR PWM  25khz
 void PwmInit()
 {
-    
-    #ifdef ARDUINO_AVR_NANO
+
+#ifdef ARDUINO_AVR_NANO
     pinMode(OC1A_PIN, OUTPUT);
 
     // Clear Timer1 control and count registers
@@ -222,10 +227,12 @@ void PwmInit()
     TCCR1A |= (1 << COM1A1) | (1 << WGM11);
     TCCR1B |= (1 << WGM13) | (1 << CS10);
     ICR1 = TCNT1_TOP;
-    #endif
+#endif
 
-// TO DO: aggiungere il pwm setup per la black pill
-    #ifdef STM32F411xE
-    pinMode(PB10, OUTPUT);
-    #endif
+#ifdef STM32F411xE
+    TIM_TypeDef *Instance = (TIM_TypeDef *)pinmap_peripheral(digitalPinToPinName(PB10), PinMap_PWM);
+    uint32_t channel = STM_PIN_CHANNEL(pinmap_function(digitalPinToPinName(PB10), PinMap_PWM));
+    MyTim = new HardwareTimer(Instance);
+    MyTim->setPWM(channel, PB10, PWM_FREQ_HZ, fanPower); // 25khz Hertz, 20% dutycycle
+#endif
 }
