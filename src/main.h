@@ -5,12 +5,19 @@
 #include "./Utility/button.h"
 #include "./Screen/screen.h"
 #include "./Logic/state.h"
-///////////////////////////////////// SENSOR ////////////////////////////////////////////
+///////////////////////////////////// SENSORS ////////////////////////////////////////////
+
+// SCREEN
 #ifdef SCREEN
 #define REFRESH_HOME 1000        // refresh screen home every second
 unsigned long homeTimer = 0;
 #endif
-uint32_t PM_READ = 0;
+
+
+uint32_t PM_READ_2_5 = 0;
+uint32_t PM_READ_10 = 0;
+
+// PMSENSOR
 #ifdef PMSENSOR
 SoftwareSerial pmsSerial(RxPin, TxPin);
 PMS pms(pmsSerial);
@@ -24,6 +31,7 @@ bool SENSOR_STATE = false; // if false sensor sleep
 
 uint16_t fanPower = 20;
 
+// FAN
 #ifdef FAN
 #define CHANGE_FAN 60000 // wait 30s for sensor to stabilize
 unsigned long fanTimer = 0;
@@ -51,15 +59,5 @@ void setPwmDuty(byte duty);
 void power(uint32_t read);
 
 void mydisplay();
-void testdrawbitmap(const uint8_t *bitmap, uint8_t w, uint8_t h);
-void testdrawchar(void);
-void testdrawcircle(void);
-void testfillrect(void);
-void testdrawtriangle(void);
-void testfilltriangle(void);
-void testdrawroundrect(void);
-void testfillroundrect(void);
-void testdrawrect(void);
-void testdrawline();
-void refreshHome();
-void PwmArd();
+
+void PwmInit();

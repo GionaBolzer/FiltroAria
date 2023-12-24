@@ -27,9 +27,7 @@ void setup()
 #endif
 
 #ifdef FAN
-#ifdef ARDUINO_AVR_NANO
-    PwmArd();
-#endif
+    PwmInit();
     setPwmDuty(fanPower);
 #endif
 }
@@ -44,13 +42,18 @@ void loop()
 #ifdef FAN
     power(PM_READ);
     setPwmDuty(fanPower); // Change this value 0-100 to adjust duty cycle
-#endif
-    refreshHome();
+#endi
+
+    //check state button retrun short or long
     Pressed b = button.scan();
+
+#ifdef SCREEN
+
+    refreshHome();
     switch (state.change(b))
     {
     case State::HOME:
-        displayClasse.home(10, 10, fanPower, state.timeHome);
+        displayClasse.home(PM_READ_2_5, PM_READ_10, fanPower, state.timeHome);
         break;
     case State::MIN:
         displayClasse.paginaMin(state.timeSchermo);
@@ -69,8 +72,10 @@ void loop()
 
         break;
     }
+#endif
 }
 
+// REFRESH  VALUE IN HOME SCREEN EVERY SECOND
 void refreshHome()
 {
     if (state.schermo == State::HOME)
@@ -93,13 +98,15 @@ void refreshHome()
                 state.timerHome = millis();
             }
 
-            displayClasse.home(10, 10, fanPower, state.timeHome);
+            displayClasse.home(PM_READ_2_5, PM_READ_10, fanPower, state.timeHome);
             homeTimer = millis();
         }
     }
 }
 
 #ifdef PMSENSOR
+
+// WAKE UP SENSOR EVERY GET_PM_READ_EVERY SECONDS
 void wakeUpSensor() // wake uo every 120s
 {
     if (millis() > sensorTimer && !SENSOR_STATE)
@@ -112,6 +119,7 @@ void wakeUpSensor() // wake uo every 120s
     }
 }
 
+// READ SENSOR AFTER WAIT_PM SECONDS AFTER IS WAKE UP AND THEN PUT IN SLEEP
 void readSensor()
 {
     if (millis() > (sensorTimer + WAIT_PM) && SENSOR_STATE) // 30s after wake up
@@ -131,7 +139,8 @@ void readSensor()
             Serial.print("PM 10.0 (ug/m3): ");
             Serial.println(data.PM_AE_UG_10_0);
 #endif
-            PM_READ = data.PM_AE_UG_2_5;
+            PM_READ_2_5 = data.PM_AE_UG_2_5;
+            PM_READ_10 = data.PM_AE_UG_10_0;
         }
         else
         {
@@ -149,6 +158,7 @@ void readSensor()
 }
 #endif
 
+// WRITE DUTY CYCLE FOR PWM
 void setPwmDuty(byte duty)
 {
     // TO DO: aggiungere il pwm per la black pill
@@ -157,6 +167,7 @@ void setPwmDuty(byte duty)
 #endif
 }
 
+// RETURN POWER FAN IN % FROM SENSORE READ OR FROM MODE SCREEN
 void power(uint32_t read)
 {
     if (FORCE_POWER == 1)
@@ -195,7 +206,9 @@ void power(uint32_t read)
     }
 }
 
-void PwmArd()
+
+// HARDWARE SETUP FOR PWM  25khz
+void PwmInit()
 {
     
     #ifdef ARDUINO_AVR_NANO
