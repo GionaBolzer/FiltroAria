@@ -13,7 +13,7 @@ void setup()
 
 #ifdef LOG
     Serial.begin(115200);
-    Serial.println("Welcome home, Sir");
+    Serial.println("Welcome home, Sir");b  
 #endif
 
 #ifdef SCREEN
@@ -230,9 +230,9 @@ void PwmInit()
 #endif
 
 #ifdef STM32F411xE
-    TIM_TypeDef *Instance = (TIM_TypeDef *)pinmap_peripheral(digitalPinToPinName(PB10), PinMap_PWM);
-    uint32_t channel = STM_PIN_CHANNEL(pinmap_function(digitalPinToPinName(PB10), PinMap_PWM));
+    TIM_TypeDef *Instance = (TIM_TypeDef *)pinmap_peripheral(digitalPinToPinName(PA6), PinMap_PWM);
+    uint32_t channel = STM_PIN_CHANNEL(pinmap_function(digitalPinToPinName(PA6), PinMap_PWM));
     MyTim = new HardwareTimer(Instance);
-    MyTim->setPWM(channel, PB10, PWM_FREQ_HZ, fanPower); // 25khz Hertz, 20% dutycycle
+    MyTim->setPWM(channel, PA6, PWM_FREQ_HZ, fanPower); // 25khz Hertz, 20% dutycycle
 #endif
 }

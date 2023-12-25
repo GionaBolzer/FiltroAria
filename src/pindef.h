@@ -1,13 +1,17 @@
 #ifndef PINDEF_H
 #define PINDEF_H
 
-// UART protocol
+
+#ifdef STM32F411xE
+#define BUTTON_PIN  PA5
+#define RxPin PC13
+#define TxPin PC14
+#endif
+
+#ifdef ARDUINO_AVR_NANO
 #define RxPin 2 // Rx on Nano
 #define TxPin 3 // Tx on Nano
-
-// button
 #define BUTTON_PIN 4
-
-// I2C
-
 #endif
+
+#endif  
