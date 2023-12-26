@@ -10,15 +10,18 @@ HardwareTimer *MyTim;
 
 void setup()
 {
-
+    pinMode(LED_BUILTIN, OUTPUT);
+    digitalWrite(LED_BUILTIN, LOW);
+    delay(5000);
+    digitalWrite(LED_BUILTIN, HIGH);
 #ifdef LOG
     Serial.begin(115200);
-    Serial.println("Welcome home, Sir");b  
+    Serial.println("Welcome home, Sir");
 #endif
 
 #ifdef SCREEN
 
-    displayClasse.begin();
+        displayClasse.begin();
     delay(100);
     displayClasse.home(PM_READ_2_5, PM_READ_10, fanPower, state.timeHome);
 #endif
@@ -36,6 +39,7 @@ void setup()
 
 void loop()
 {
+
 #ifdef PMSENSOR
     wakeUpSensor();
     readSensor();
@@ -46,11 +50,20 @@ void loop()
     setPwmDuty(fanPower); // Change this value 0-100 to adjust duty cycle
 #endif
 
-    // check state button retrun short or long
+    // check state button return short or long
     Pressed b = button.scan();
-
+    if (b == Pressed::SHORT)
+    {
+        digitalWrite(LED_BUILTIN, LOW);
+        delay(1000);
+        digitalWrite(LED_BUILTIN, HIGH);
+    }
+    // if(b == Pressed::LONG){
+    //     digitalWrite(LED_BUILTIN, LOW);
+    //     delay(3000);
+    //     digitalWrite(LED_BUILTIN, HIGH);
+    // }
 #ifdef SCREEN
-
     refreshHome();
     switch (state.change(b))
     {
@@ -143,11 +156,15 @@ void readSensor()
 #endif
             PM_READ_2_5 = data.PM_AE_UG_2_5;
             PM_READ_10 = data.PM_AE_UG_10_0;
+            // PM_READ_2_5 = 25;
+            // PM_READ_10 = 30;
         }
         else
         {
 #ifdef LOG
             Serial.println("No data.");
+            // PM_READ_2_5 = 100;
+            // PM_READ_10 = 100;
 #endif
         }
 #ifdef LOG
@@ -169,7 +186,7 @@ void setPwmDuty(byte duty)
 #endif
 
 #ifdef STM32F411xE
-    MyTim->setPWM(channel, PB10, PWM_FREQ_HZ, duty);
+    // MyTim->setPWM(channel, FAN, PWM_FREQ_HZ, duty);
 #endif
 }
 
@@ -233,6 +250,6 @@ void PwmInit()
     TIM_TypeDef *Instance = (TIM_TypeDef *)pinmap_peripheral(digitalPinToPinName(PA6), PinMap_PWM);
     uint32_t channel = STM_PIN_CHANNEL(pinmap_function(digitalPinToPinName(PA6), PinMap_PWM));
     MyTim = new HardwareTimer(Instance);
-    MyTim->setPWM(channel, PA6, PWM_FREQ_HZ, fanPower); // 25khz Hertz, 20% dutycycle
+    MyTim->setPWM(channel, FAN, PWM_FREQ_HZ, fanPower); // 25khz Hertz, 20% dutycycle
 #endif
 }

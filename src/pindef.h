@@ -6,6 +6,7 @@
 #define BUTTON_PIN  PA5
 #define RxPin PC13
 #define TxPin PC14
+#define FAN PA6
 #endif
 
 #ifdef ARDUINO_AVR_NANO
