@@ -21,7 +21,7 @@ void setup()
 
 #ifdef SCREEN
 
-        displayClasse.begin();
+    displayClasse.begin();
     delay(100);
     displayClasse.home(PM_READ_2_5, PM_READ_10, fanPower, state.timeHome);
 #endif
@@ -55,36 +55,46 @@ void loop()
     if (b == Pressed::SHORT)
     {
         digitalWrite(LED_BUILTIN, LOW);
-        delay(1000);
+        delay(500);
+        digitalWrite(LED_BUILTIN, HIGH);
+        delay(500);
+        digitalWrite(LED_BUILTIN, LOW);
+        delay(500);
         digitalWrite(LED_BUILTIN, HIGH);
     }
-    // if(b == Pressed::LONG){
-    //     digitalWrite(LED_BUILTIN, LOW);
-    //     delay(3000);
-    //     digitalWrite(LED_BUILTIN, HIGH);
-    // }
+    if (b == Pressed::LONG)
+    {
+        digitalWrite(LED_BUILTIN, LOW);
+        delay(500);
+        digitalWrite(LED_BUILTIN, HIGH);
+        delay(500);
+        digitalWrite(LED_BUILTIN, LOW);
+        delay(500);
+        digitalWrite(LED_BUILTIN, HIGH);
+        delay(500);
+        digitalWrite(LED_BUILTIN, LOW);
+        delay(500);
+        digitalWrite(LED_BUILTIN, HIGH);
+    }
 #ifdef SCREEN
     refreshHome();
     switch (state.change(b))
     {
     case State::HOME:
-        displayClasse.home(PM_READ_2_5, PM_READ_10, fanPower, state.timeHome);
+        // displayClasse.home(PM_READ_2_5, PM_READ_10, fanPower, state.timeHome);
+        displayClasse.paginaMax(state.timeSchermo);
         break;
     case State::MIN:
         displayClasse.paginaMin(state.timeSchermo);
-
         break;
     case State::MAX:
         displayClasse.paginaMax(state.timeSchermo);
-
         break;
     case State::MINSEL:
         displayClasse.minsel(state.timeSchermo);
-
         break;
     case State::MAXSEL:
         displayClasse.maxsel(state.timeSchermo);
-
         break;
     }
 #endif
