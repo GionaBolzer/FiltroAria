@@ -29,7 +29,7 @@ bool SENSOR_STATE = false; // if false sensor sleep
 
 #endif
 
-uint16_t fanPower = 20;
+uint16_t fanPower = 0;
 
 // FAN
 #ifdef FAN
@@ -42,7 +42,7 @@ const word PWM_FREQ_HZ = 25000; // Adjust this value to adjust the frequency
 const word TCNT1_TOP = 16000000 / (2 * PWM_FREQ_HZ);
 
 // default power is 20 %
-uint16_t minPower = 20;   // min power fan at 20%
+uint16_t minPower = 0;   // min power fan at 20%
 uint16_t maxPower = 100;  // max power fan at 100%
 uint32_t minPowerPM = 0;  // set pm read at wich the fan is at min value
 uint32_t maxPowerPM = 50; // set pm read at wich the fan is at max value
