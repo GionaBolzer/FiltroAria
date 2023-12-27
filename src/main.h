@@ -34,7 +34,6 @@ uint16_t fanPower = 20;
 // FAN
 #ifdef FAN
 #define CHANGE_FAN 60000 // wait 30s for sensor to stabilize
-uint32_t channel; // strore channel of timer
 unsigned long fanTimer = 0;
 const byte OC1A_PIN = 9;
 const byte OC1B_PIN = 10;

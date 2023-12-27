@@ -6,6 +6,7 @@ Logica state;
 // STM32Duino harware timer
 #ifdef STM32F411xE
 HardwareTimer *MyTim;
+uint32_t channel;
 #endif
 
 void setup()
@@ -30,7 +31,6 @@ void setup()
 
 #ifdef FAN
     PwmInit();
-    // setPwmDuty(fanPower);
 #endif
 }
 
@@ -170,8 +170,7 @@ void setPwmDuty(byte duty)
 #endif
 
 #ifdef STM32F411xE
-    // MyTim->setPWM(channel, FAN, PWM_FREQ_HZ, duty);
-    // MyTim->setCaptureCompare(channel, duty, PERCENT_COMPARE_FORMAT); // 50%
+    MyTim->setCaptureCompare(channel, duty, PERCENT_COMPARE_FORMAT); // 100%
 #endif
 }
 
@@ -229,6 +228,7 @@ void PwmInit()
     TCCR1A |= (1 << COM1A1) | (1 << WGM11);
     TCCR1B |= (1 << WGM13) | (1 << CS10);
     ICR1 = TCNT1_TOP;
+    OCR1A = (word)(fanPower * TCNT1_TOP) / 100;
 #endif
 
 #ifdef STM32F411xE
@@ -238,12 +238,12 @@ void PwmInit()
     // MyTim->setPWM(channel, FAN, PWM_FREQ_HZ, fanPower); // 25khz Hertz, 20% dutycycle
 
     TIM_TypeDef *Instance = (TIM_TypeDef *)pinmap_peripheral(digitalPinToPinName(PA6), PinMap_PWM);
-    uint32_t channel = STM_PIN_CHANNEL(pinmap_function(digitalPinToPinName(PA6), PinMap_PWM));
+    channel = STM_PIN_CHANNEL(pinmap_function(digitalPinToPinName(PA6), PinMap_PWM));
     MyTim = new HardwareTimer(Instance);
     MyTim->setMode(channel, TIMER_OUTPUT_COMPARE_PWM1, FAN);
-    MyTim->setOverflow(PWM_FREQ_HZ, HERTZ_FORMAT);                   // 10000 microseconds = 10 milliseconds
+    MyTim->setOverflow(PWM_FREQ_HZ, HERTZ_FORMAT);                 // 10000 microseconds = 10 milliseconds
     MyTim->setCaptureCompare(channel, 20, PERCENT_COMPARE_FORMAT); // 50%
     MyTim->resume();
-    
+
 #endif
 }
