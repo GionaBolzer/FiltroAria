@@ -2,6 +2,9 @@
 
 State Logica::change(Pressed button)
 {
+    if(button == Pressed::NO){
+        return schermo;
+    }
     if (button == Pressed::SHORT)
     {
         if (schermo == State::HOME)
