@@ -181,11 +181,11 @@ void power(uint32_t read)
     {
         if (state.timerMode == TimerMode::MASSIMO)
         {
-            fanPower = 100;
+            fanPower = maxPower;
         }
         if (state.timerMode == TimerMode::MINIMO)
         {
-            fanPower = 25;
+            fanPower = minPower;
         }
     }
     else
