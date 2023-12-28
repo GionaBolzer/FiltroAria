@@ -6,10 +6,9 @@
 enum State
 {
     HOME,
-    MIN,
-    MINSEL,
-    MAX,
-    MAXSEL,
+    MODE,
+    MODESELTIMER,
+    MODESELPOWER,
 };
 
 enum TimerMode

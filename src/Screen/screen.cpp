@@ -43,7 +43,7 @@ void Screen::home(int pm2_5, int pm10, int power, int Timer)
     }
 }
 
-void Screen::paginaMin(int Timer)
+void Screen::paginaMode(int Timer)
 {
     if (millis() - timer > delayRefresh)
     {
@@ -55,27 +55,14 @@ void Screen::paginaMin(int Timer)
         display.setCursor(35, 35);
         display.print("Timer: ");
         display.print(Timer);
-        display.display();
-        timer = millis();
-    }
-}
-void Screen::paginaMax(int Timer)
-{
-    if (millis() - timer > delayRefresh)
-    {
-        display.clearDisplay();
-        display.setCursor(35, 0);
-        display.setTextSize(1);
-        display.println("MAX MODE");
-        display.setTextSize(1);
-        display.setCursor(35, 35);
+        display.setCursor(35, 50);
         display.print("Timer: ");
-        display.print(Timer);
+        display.print(Power);
         display.display();
         timer = millis();
     }
 }
-void Screen::minsel(int Timer)
+void Screen::paginaModeSelTimer(int Timer)
 {
     if (millis() - timer > delayRefresh)
     {
@@ -92,7 +79,7 @@ void Screen::minsel(int Timer)
         timer = millis();
     }
 }
-void Screen::maxsel(int Timer)
+void Screen::paginaModeSelPower(int Timer)
 {
     if (millis() - timer > delayRefresh)
     {
@@ -104,8 +91,26 @@ void Screen::maxsel(int Timer)
         display.setCursor(35, 35);
         display.print("Timer: ");
         display.print(Timer);
-        display.drawRoundRect(30, 32, 70, 13, 3, WHITE);
         display.display();
         timer = millis();
     }
 }
+
+
+// void Screen::minsel(int Timer)
+// {
+//     if (millis() - timer > delayRefresh)
+//     {
+//         display.clearDisplay();
+//         display.setCursor(35, 0);
+//         display.setTextSize(1);
+//         display.println("MIN MODE");
+//         display.setTextSize(1);
+//         display.setCursor(35, 35);
+//         display.print("Timer: ");
+//         display.print(Timer);
+//         display.drawRoundRect(30, 32, 70, 13, 3, WHITE);
+//         display.display();
+//         timer = millis();
+//     }
+// }
