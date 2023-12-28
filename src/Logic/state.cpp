@@ -10,26 +10,25 @@ State Logica::change(Pressed button)
         if (schermo == State::HOME)
         {
             timeSchermo = 5;
-            schermo = State::MIN;
+            powerSchermo = 0;
+            schermo = State::MODE;
         }
-        else if (schermo == State::MIN)
-        {
-            timeSchermo = 5;
-            schermo = State::MAX;
-        }
-        else if (schermo == State::MINSEL)
-        {
-            timeSchermo += 5;
-            schermo = State::MINSEL;
-        }
-        else if (schermo == State::MAX)
+        else if (schermo == State::MODE)
         {
             schermo = State::HOME;
         }
-        else if (schermo == State::MAXSEL)
+        else if (schermo == State::MODESELTIMER)
         {
             timeSchermo += 5;
-            schermo = State::MAXSEL;
+            schermo = State::MODESELTIMER;
+        }
+        else if (schermo == State::MODESELPOWER)
+        {
+            powerSchermo += 10;
+            if(powerSchermo > 100){
+                powerSchermo = 0;
+            }
+            schermo = State::MODESELPOWER;
         }
         return schermo;
     }
@@ -39,34 +38,28 @@ State Logica::change(Pressed button)
         if (schermo == State::HOME)
         {
             timeSchermo = 5;
+            powerSchermo = 0;
+            powerHome = 0;
             timeHome = 0;
             timerHome = 0;
             schermo = State::HOME;
             return schermo;
         }
-        if (schermo == State::MIN)
+        if (schermo == State::MODE)
         {
-            schermo = State::MINSEL;
+            schermo = State::MODESELTIMER;
             return schermo;
         }
-        if (schermo == State::MINSEL)
+        if (schermo == State::MODESELTIMER)
+        {
+            schermo = State::MODESELPOWER;
+            return schermo;
+        }
+        if (schermo == State::MODESELPOWER)
         {
             schermo = State::HOME;
             timeHome = timeSchermo;
-            timerMode = TimerMode::MINIMO;
-            timerHome = millis();
-            return schermo;
-        }
-        if (schermo == State::MAX)
-        {
-            schermo = State::MAXSEL;
-            return schermo;
-        }
-        if (schermo == State::MAXSEL)
-        {
-            schermo = State::HOME;
-            timeHome = timeSchermo;
-            timerMode = TimerMode::MASSIMO;
+            powerHome = powerSchermo;
             timerHome = millis();
             return schermo;
         }

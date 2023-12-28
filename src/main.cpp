@@ -56,19 +56,15 @@ void loop()
     {
     case State::HOME:
         displayClasse.home(PM_READ_2_5, PM_READ_10, fanPower, state.timeHome);
-        // displayClasse.paginaMax(state.timeSchermo);
         break;
-    case State::MIN:
-        displayClasse.paginaMin(state.timeSchermo);
+    case State::MODE:
+        displayClasse.paginaMode(state.timeSchermo, state.powerSchermo);
         break;
-    case State::MAX:
-        displayClasse.paginaMax(state.timeSchermo);
+    case State::MODESELTIMER:
+        displayClasse.paginaModeSelTimer(state.timeSchermo, state.powerSchermo);
         break;
-    case State::MINSEL:
-        displayClasse.minsel(state.timeSchermo);
-        break;
-    case State::MAXSEL:
-        displayClasse.maxsel(state.timeSchermo);
+    case State::MODESELPOWER:
+        displayClasse.paginaModeSelPower(state.timeSchermo, state.powerSchermo);
         break;
     }
 #endif
@@ -87,7 +83,7 @@ void refreshHome()
         {
             state.timeHome = 0;
             FORCE_POWER = 0;
-            fanPower = 20;
+            fanPower = state.powerHome;
         }
         if (millis() > homeTimer + REFRESH_HOME)
         {
@@ -179,14 +175,8 @@ void power(uint32_t read)
 {
     if (FORCE_POWER == 1)
     {
-        if (state.timerMode == TimerMode::MASSIMO)
-        {
-            fanPower = maxPower;
-        }
-        if (state.timerMode == TimerMode::MINIMO)
-        {
-            fanPower = minPower;
-        }
+
+        fanPower = state.powerHome;
     }
     else
     {

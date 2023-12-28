@@ -25,7 +25,9 @@ public:
     TimerMode timerMode;
     State schermo = State::HOME;
     int timeSchermo = 5;
+    int powerSchermo = 0;
     int timeHome = 0;
+    int powerHome = 0;
     unsigned long timerHome = 0;
     State change(Pressed button);
 };

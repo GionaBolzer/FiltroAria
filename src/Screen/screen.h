@@ -25,8 +25,8 @@ public:
     Screen();
     void begin();
     void home(int pm2_5, int pm10, int power, int Timer);
-    void paginaMode(int timer);
-    void paginaModeSelTimer(int timer);
-    void paginaModeSelPower(int timer);
+    void paginaMode(int Timer, int power);
+    void paginaModeSelTimer(int Timer, int power);
+    void paginaModeSelPower(int Timer, int power);
 };
 #endif

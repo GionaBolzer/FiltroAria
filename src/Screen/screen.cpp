@@ -43,74 +43,63 @@ void Screen::home(int pm2_5, int pm10, int power, int Timer)
     }
 }
 
-void Screen::paginaMode(int Timer)
+void Screen::paginaMode(int Timer, int power)
 {
     if (millis() - timer > delayRefresh)
     {
         display.clearDisplay();
-        display.setCursor(35, 0);
+        display.setCursor(50, 0);
         display.setTextSize(1);
-        display.println("MIN MODE");
+        display.println("MODE");
         display.setTextSize(1);
-        display.setCursor(35, 35);
+        display.setCursor(35, 25);
         display.print("Timer: ");
         display.print(Timer);
-        display.setCursor(35, 50);
-        display.print("Timer: ");
-        display.print(Power);
+        display.setCursor(35, 40);
+        display.print("Power: ");
+        display.print(power);
         display.display();
         timer = millis();
     }
 }
-void Screen::paginaModeSelTimer(int Timer)
+void Screen::paginaModeSelTimer(int Timer, int power)
 {
     if (millis() - timer > delayRefresh)
     {
         display.clearDisplay();
-        display.setCursor(35, 0);
+        display.setCursor(50, 0);
         display.setTextSize(1);
-        display.println("MIN MODE");
+        display.println("MODE");
         display.setTextSize(1);
-        display.setCursor(35, 35);
+        display.setCursor(35, 25);
         display.print("Timer: ");
         display.print(Timer);
-        display.drawRoundRect(30, 32, 70, 13, 3, WHITE);
+        display.drawRoundRect(30, 22, 70, 13, 3, WHITE);
+        display.setCursor(35, 40);
+        display.print("Power: ");
+        display.print(power);
         display.display();
         timer = millis();
     }
 }
-void Screen::paginaModeSelPower(int Timer)
+void Screen::paginaModeSelPower(int Timer, int power)
 {
     if (millis() - timer > delayRefresh)
     {
         display.clearDisplay();
-        display.setCursor(35, 0);
+        display.setCursor(50, 0);
         display.setTextSize(1);
-        display.println("MAX MODE");
+        display.println("MODE");
         display.setTextSize(1);
-        display.setCursor(35, 35);
+        display.setCursor(35, 25);
         display.print("Timer: ");
         display.print(Timer);
+        display.setCursor(35, 40);
+        display.print("Power: ");
+        display.print(power);
+        display.drawRoundRect(30, 37, 70, 13, 3, WHITE);
         display.display();
         timer = millis();
     }
 }
 
-
-// void Screen::minsel(int Timer)
-// {
-//     if (millis() - timer > delayRefresh)
-//     {
-//         display.clearDisplay();
-//         display.setCursor(35, 0);
-//         display.setTextSize(1);
-//         display.println("MIN MODE");
-//         display.setTextSize(1);
-//         display.setCursor(35, 35);
-//         display.print("Timer: ");
-//         display.print(Timer);
-//         display.drawRoundRect(30, 32, 70, 13, 3, WHITE);
-//         display.display();
-//         timer = millis();
-//     }
-// }
