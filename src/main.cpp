@@ -119,6 +119,7 @@ void readSensor()
 {
     if (millis() > (sensorTimer + WAIT_PM) && SENSOR_STATE) // 30s after wake up
     {
+        while (pmsSerial.available()) { pmsSerial.read(); } // clear serial
         pms.requestRead();
 #ifdef LOG
         Serial.println("Send read request...");
