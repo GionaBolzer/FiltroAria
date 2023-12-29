@@ -143,9 +143,9 @@ void readSensor()
         {
 #ifdef LOG
             Serial.println("No data.");
-            // PM_READ_2_5 = 100;
-            // PM_READ_10 = 100;
 #endif
+            PM_READ_2_5 = 271;
+            PM_READ_10 = 314;
         }
 #ifdef LOG
         Serial.println("Going to sleep for 120 seconds.");
