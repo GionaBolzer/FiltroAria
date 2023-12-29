@@ -16,6 +16,7 @@ unsigned long homeTimer = 0;
 
 uint32_t PM_READ_2_5 = 0;
 uint32_t PM_READ_10 = 0;
+bool error = true;
 
 // PMSENSOR
 #ifdef PMSENSOR

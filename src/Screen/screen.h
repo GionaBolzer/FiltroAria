@@ -24,7 +24,7 @@ public:
     int time = 0;
     Screen();
     void begin();
-    void home(int pm2_5, int pm10, int power, int Timer);
+    void home(int pm2_5, int pm10, int power, int Timer, bool error);
     void paginaMode(int Timer, int power);
     void paginaModeSelTimer(int Timer, int power);
     void paginaModeSelPower(int Timer, int power);

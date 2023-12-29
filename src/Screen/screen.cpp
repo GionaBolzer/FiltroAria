@@ -14,19 +14,34 @@ void Screen::begin()
     display.clearDisplay();
 }
 
-void Screen::home(int pm2_5, int pm10, int power, int Timer)
+void Screen::home(int pm2_5, int pm10, int power, int Timer, bool error)
 {
     if (millis() - timer > delayRefresh || timer == 0)
     {
         display.clearDisplay();
-        display.setCursor(5, 10);
-        display.print("Pm 2.5: ");
-        display.print(pm2_5);
-        display.println(" u/m3");
-        display.setCursor(5, 25);
-        display.print("Pm 10: ");
-        display.print(pm10);
-        display.println(" u/m3");
+        if (error)
+        {
+            display.setCursor(5, 10);
+            display.print("Pm 2.5: ");
+            display.print("No data");
+            display.println(" u/m3");
+            display.setCursor(5, 25);
+            display.print("Pm 10: ");
+            display.print("No data");
+            display.println(" u/m3");
+        }
+        else
+        {
+            display.setCursor(5, 10);
+            display.print("Pm 2.5: ");
+            display.print(pm2_5);
+            display.println(" u/m3");
+            display.setCursor(5, 25);
+            display.print("Pm 10: ");
+            display.print(pm10);
+            display.println(" u/m3");
+        }
+
         display.setCursor(5, 40);
         display.print("Power: ");
         display.print(power);
@@ -102,4 +117,3 @@ void Screen::paginaModeSelPower(int Timer, int power)
         timer = millis();
     }
 }
-

@@ -21,7 +21,7 @@ void setup()
 
     displayClasse.begin();
     delay(100);
-    displayClasse.home(PM_READ_2_5, PM_READ_10, fanPower, state.timeHome);
+    displayClasse.home(PM_READ_2_5, PM_READ_10, fanPower, state.timeHome, error);
 #endif
 
 #ifdef PMSENSOR
@@ -55,7 +55,7 @@ void loop()
     switch (state.change(b))
     {
     case State::HOME:
-        displayClasse.home(PM_READ_2_5, PM_READ_10, fanPower, state.timeHome);
+        displayClasse.home(PM_READ_2_5, PM_READ_10, fanPower, state.timeHome, error);
         break;
     case State::MODE:
         displayClasse.paginaMode(state.timeSchermo, state.powerSchermo);
@@ -93,7 +93,7 @@ void refreshHome()
                 state.timerHome = millis();
             }
 
-            displayClasse.home(PM_READ_2_5, PM_READ_10, fanPower, state.timeHome);
+            displayClasse.home(PM_READ_2_5, PM_READ_10, fanPower, state.timeHome, error);
             homeTimer = millis();
         }
     }
@@ -134,6 +134,7 @@ void readSensor()
             Serial.print("PM 10.0 (ug/m3): ");
             Serial.println(data.PM_AE_UG_10_0);
 #endif
+            error = false;
             PM_READ_2_5 = data.PM_AE_UG_2_5;
             PM_READ_10 = data.PM_AE_UG_10_0;
             // PM_READ_2_5 = 25;
@@ -144,8 +145,9 @@ void readSensor()
 #ifdef LOG
             Serial.println("No data.");
 #endif
-                // PM_READ_2_5 = 271;
-                // PM_READ_10 = 314;
+            error = true;
+            // PM_READ_2_5 = 271;
+            // PM_READ_10 = 314;
         }
 #ifdef LOG
         Serial.println("Going to sleep for 120 seconds.");
@@ -173,6 +175,11 @@ void setPwmDuty(byte duty)
 // RETURN POWER FAN IN % FROM SENSORE READ OR FROM MODE SCREEN
 void power(uint32_t read)
 {
+    if (error)
+    {
+        fanPower = 20;
+        return;
+    }
     if (FORCE_POWER == 1)
     {
 
@@ -209,7 +216,6 @@ void PwmInit()
 
 #ifdef ARDUINO_AVR_NANO
     pinMode(OC1A_PIN, OUTPUT);
-
     // Clear Timer1 control and count registers
     TCCR1A = 0;
     TCCR1B = 0;
@@ -222,11 +228,6 @@ void PwmInit()
 #endif
 
 #ifdef STM32F411xE
-    // TIM_TypeDef *Instance = (TIM_TypeDef *)pinmap_peripheral(digitalPinToPinName(PA6), PinMap_PWM);
-    // uint32_t channel = STM_PIN_CHANNEL(pinmap_function(digitalPinToPinName(PA6), PinMap_PWM));
-    // MyTim = new HardwareTimer(Instance);
-    // MyTim->setPWM(channel, FAN, PWM_FREQ_HZ, fanPower); // 25khz Hertz, 20% dutycycle
-
     TIM_TypeDef *Instance = (TIM_TypeDef *)pinmap_peripheral(digitalPinToPinName(PA6), PinMap_PWM);
     channel = STM_PIN_CHANNEL(pinmap_function(digitalPinToPinName(PA6), PinMap_PWM));
     MyTim = new HardwareTimer(Instance);
@@ -234,6 +235,5 @@ void PwmInit()
     MyTim->setOverflow(PWM_FREQ_HZ, HERTZ_FORMAT);                 // 10000 microseconds = 10 milliseconds
     MyTim->setCaptureCompare(channel, 20, PERCENT_COMPARE_FORMAT); // 50%
     MyTim->resume();
-
 #endif
 }
